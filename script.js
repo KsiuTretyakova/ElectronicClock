@@ -1,25 +1,27 @@
-function updateClock(time) {
+const clockElement = document.getElementById('clock');
+const selectTimeZona = document.getElementById('timeZona');
+const local_timeZone = document.getElementById('local_timeZone');
+
+function updateClock() {
     const now = new Date();
-    const hours = String(now.getUTCHours() + time).padStart(2, '0');
+
+    const timeZona = parseInt(selectTimeZona.value, 10);
+
+    const hours = String(now.getUTCHours() + timeZona).padStart(2, '0');
     const minutes = String(now.getUTCMinutes()).padStart(2, '0');
     const seconds = String(now.getUTCSeconds()).padStart(2, '0');
     
-    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
 
-    const selectTimeZona = document.getElementById("timeZona");
-    timeZona = parseInt(selectTimeZona.value, 10);
-    console.log(timeZona);
-    
-    selectTimeZona.addEventListener('change', updateClock(timeZona));
+    // console.log(timeZona);
+    local_timeZone.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 }
 
-let timeZona;
-
 
 // updateClock(timeZona);
-setInterval(updateClock(timeZona), 1000);
-
+setInterval(updateClock, 1000);
+selectTimeZona.addEventListener('change', updateClock);
 
 
 // const difrent_time_UTC = new Date().getTimezoneOffset() / 60;
